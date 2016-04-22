@@ -1,7 +1,9 @@
-package com.tuyenmonkey.stackfeed;
+package com.tuyenmonkey.stackfeed.presentation.main.view;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.tuyenmonkey.stackfeed.R;
 
 public class MainActivity extends AppCompatActivity {
 
