@@ -1,5 +1,7 @@
 package com.tuyenmonkey.stackfeed.presentation.main.view;
 
+import android.os.Bundle;
+
 import com.tuyenmonkey.stackfeed.R;
 import com.tuyenmonkey.stackfeed.base.BaseActivity;
 import com.tuyenmonkey.stackfeed.databinding.ActivityMainBinding;
@@ -19,7 +21,7 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    protected void initializeActivity() {
+    protected void initializeActivity(Bundle savedInstanceState) {
 
     }
 }

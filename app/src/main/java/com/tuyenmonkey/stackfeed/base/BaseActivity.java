@@ -21,7 +21,13 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         initializeInjector();
         bindViewModel();
-        initializeActivity();
+        initializeActivity(savedInstanceState);
+    }
+
+    @Override
+    protected void onDestroy() {
+        ButterKnife.unbind(this);
+        super.onDestroy();
     }
 
     protected void initializeInjector() {}
@@ -31,10 +37,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     public ViewDataBinding getViewDataBinding() {
         ViewDataBinding viewDataBinding = DataBindingUtil.setContentView(this, getLayoutId());
         ButterKnife.bind(this);
+
         return viewDataBinding;
     }
 
-    protected abstract void initializeActivity();
+    protected abstract void initializeActivity(Bundle savedInstanceState);
 
     public void showToastMessage(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
