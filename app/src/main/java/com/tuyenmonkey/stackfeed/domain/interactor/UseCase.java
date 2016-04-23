@@ -1,5 +1,7 @@
 package com.tuyenmonkey.stackfeed.domain.interactor;
 
+import com.tuyenmonkey.stackfeed.util.rx.TransformerUtils;
+
 import rx.Observable;
 import rx.Scheduler;
 import rx.Subscription;
@@ -25,9 +27,7 @@ public abstract class UseCase {
     @SuppressWarnings("unchecked")
     public void execute(Action1 successAction, Action1<Throwable> errorAction) {
         this.subscription = buildUseCaseObservable()
-                .subscribeOn(workerScheduler)
-                .observeOn(mainScheduler)
-                .unsubscribeOn(workerScheduler)
+                .compose(TransformerUtils.applySchedulers(mainScheduler, workerScheduler))
                 .subscribe(successAction, errorAction);
     }
 
