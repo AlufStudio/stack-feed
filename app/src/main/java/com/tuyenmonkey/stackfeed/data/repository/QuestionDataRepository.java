@@ -1,7 +1,7 @@
 package com.tuyenmonkey.stackfeed.data.repository;
 
 import com.tuyenmonkey.stackfeed.data.entity.QuestionList;
-import com.tuyenmonkey.stackfeed.data.repository.datasource.QuestionDataStore;
+import com.tuyenmonkey.stackfeed.data.repository.datasource.question.QuestionDataStore;
 
 import rx.Observable;
 
