@@ -2,6 +2,7 @@ package com.tuyenmonkey.stackfeed.dependency.component;
 
 import com.tuyenmonkey.stackfeed.dependency.module.AppModule;
 import com.tuyenmonkey.stackfeed.dependency.module.NetModule;
+import com.tuyenmonkey.stackfeed.dependency.module.QuestionModule;
 
 import javax.inject.Singleton;
 
@@ -13,4 +14,5 @@ import dagger.Component;
 @Singleton
 @Component(modules = {AppModule.class, NetModule.class})
 public interface AppComponent {
+    QuestionComponent plus(QuestionModule questionModule);
 }

@@ -4,6 +4,7 @@ import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
@@ -42,6 +43,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected abstract void initializeActivity(Bundle savedInstanceState);
+
+    public void addFragment(int resId, Fragment fragment) {
+        getSupportFragmentManager().beginTransaction().add(resId, fragment).commit();
+    }
 
     public void showToastMessage(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();

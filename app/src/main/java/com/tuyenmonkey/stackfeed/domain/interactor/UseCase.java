@@ -25,7 +25,7 @@ public abstract class UseCase {
     protected abstract Observable buildUseCaseObservable();
 
     @SuppressWarnings("unchecked")
-    public void execute(Action1 successAction, Action1<Throwable> errorAction) {
+    public <T> void execute(Action1<T> successAction, Action1<Throwable> errorAction) {
         this.subscription = buildUseCaseObservable()
                 .compose(TransformerUtils.applySchedulers(mainScheduler, workerScheduler))
                 .subscribe(successAction, errorAction);

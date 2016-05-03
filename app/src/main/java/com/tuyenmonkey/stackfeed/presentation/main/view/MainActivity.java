@@ -22,6 +22,8 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initializeActivity(Bundle savedInstanceState) {
-
+        if (savedInstanceState == null) {
+            addFragment(R.id.fl_question_list, QuestionListFragment.newInstance());
+        }
     }
 }

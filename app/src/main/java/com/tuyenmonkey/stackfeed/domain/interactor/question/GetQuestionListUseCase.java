@@ -9,12 +9,12 @@ import rx.Scheduler;
 /**
  * Created by Tuyen Nguyen on 4/22/16.
  */
-public class GetQuestionList extends UseCase {
+public class GetQuestionListUseCase extends UseCase {
 
     private final QuestionRepository questionRepository;
 
-    public GetQuestionList(Scheduler mainScheduler, Scheduler workerScheduler,
-                           QuestionRepository questionRepository) {
+    public GetQuestionListUseCase(Scheduler mainScheduler, Scheduler workerScheduler,
+                                  QuestionRepository questionRepository) {
         super(mainScheduler, workerScheduler);
         this.questionRepository = questionRepository;
     }
