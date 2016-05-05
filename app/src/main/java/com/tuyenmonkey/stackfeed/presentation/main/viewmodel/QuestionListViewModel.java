@@ -8,6 +8,7 @@ import com.tuyenmonkey.stackfeed.base.BaseViewModel;
 import com.tuyenmonkey.stackfeed.data.entity.Question;
 import com.tuyenmonkey.stackfeed.data.entity.QuestionList;
 import com.tuyenmonkey.stackfeed.domain.interactor.question.GetQuestionListUseCase;
+import com.tuyenmonkey.stackfeed.util.StateView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,11 +30,16 @@ public class QuestionListViewModel extends BaseViewModel {
     }
 
     public void loadQuestions() {
+        viewBehavior.onNext(StateView.LOADING);
         getQuestionListUseCase.execute(new Action1<QuestionList>() {
             @Override
             public void call(QuestionList questionList) {
+                if (questionList.getQuestions().isEmpty()) {
+                    viewBehavior.onNext(StateView.EMPTY);
+                } else {
+                    viewBehavior.onNext(StateView.CONTENT);
+                }
                 questions.clear();
-
                 List<QuestionItemViewModel> items = new ArrayList<>();
                 for (Question q : questionList.getQuestions()) {
                     items.add(new QuestionItemViewModel(q));
@@ -44,6 +50,7 @@ public class QuestionListViewModel extends BaseViewModel {
         }, new Action1<Throwable>() {
             @Override
             public void call(Throwable throwable) {
+                viewBehavior.onNext(StateView.ERROR);
                 Log.e(TAG, throwable.getMessage());
             }
         });

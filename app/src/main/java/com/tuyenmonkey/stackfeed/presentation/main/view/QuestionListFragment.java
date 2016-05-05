@@ -2,7 +2,9 @@ package com.tuyenmonkey.stackfeed.presentation.main.view;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.View;
 
 import com.tuyenmonkey.stackfeed.R;
@@ -12,8 +14,12 @@ import com.tuyenmonkey.stackfeed.databinding.FragmentQuestionListBinding;
 import com.tuyenmonkey.stackfeed.dependency.module.QuestionModule;
 import com.tuyenmonkey.stackfeed.presentation.main.adapter.QuestionAdapter;
 import com.tuyenmonkey.stackfeed.presentation.main.viewmodel.QuestionListViewModel;
+import com.tuyenmonkey.stackfeed.util.StateView;
 
 import javax.inject.Inject;
+
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 /**
  * Created by Tuyen Nguyen on 4/22/16.
@@ -47,6 +53,7 @@ public class QuestionListFragment extends BaseFragment {
         this.binding = DataBindingUtil.bind(view);
         this.binding.setViewModel(viewModel);
         this.binding.rvQuestions.setLayoutManager(new LinearLayoutManager(getContext()));
+        updateStateView();
     }
 
     @Override
@@ -60,5 +67,43 @@ public class QuestionListFragment extends BaseFragment {
     public void onDestroy() {
         viewModel.onDestroy();
         super.onDestroy();
+    }
+
+    private void updateStateView() {
+        viewModel.getViewBehaviorObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<StateView>() {
+                    @Override
+                    public void call(StateView stateView) {
+                        switch (stateView) {
+                            case LOADING:
+                                binding.paStateView.showLoading();
+                                break;
+                            case CONTENT:
+                                binding.paStateView.showContent();
+                                break;
+                            case EMPTY:
+                                binding.paStateView.showEmpty(ContextCompat.getDrawable(
+                                        getContext(), R.mipmap.ic_launcher), "Empty", "Empty Description");
+                                break;
+                            case ERROR:
+                                binding.paStateView.showError(ContextCompat.getDrawable(
+                                        getContext(), R.mipmap.ic_launcher), "Error", "Error Description", "Button", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Log.e("TUYEN", "AC");
+                                    }
+                                });
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        Log.e(TAG, throwable.getMessage());
+                    }
+                });
     }
 }

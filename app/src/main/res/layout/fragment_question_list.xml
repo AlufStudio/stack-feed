@@ -11,10 +11,13 @@
             />
     </data>
 
-    <LinearLayout
-        android:orientation="vertical"
+    <com.vlonjatg.progressactivity.ProgressActivity
+        android:id="@+id/pa_state_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:loadingBackgroundColor="#FFFFFF"
+        app:emptyBackgroundColor="#fbc02d"
+        app:errorBackgroundColor="#42a5f5">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_questions"
@@ -22,5 +25,5 @@
             android:layout_height="match_parent"
             app:items="@{viewModel.questions}"
             />
-    </LinearLayout>
+    </com.vlonjatg.progressactivity.ProgressActivity>
 </layout>
